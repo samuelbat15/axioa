@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion TikTok — AXIOA</title>
+<style>
+  :root { --ink:#111; --bg:#fff; --accent:#e63946; --faint:#555; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#eee; --bg:#0e0e10; --faint:#aaa; }
+  }
+  body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.6 system-ui, sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:48px 24px; }
+  h1 { font-size:1.6rem; }
+  p { color:var(--faint); }
+  code { display:block; word-break:break-all; background:rgba(230,57,70,.08);
+         border:1px solid var(--accent); border-radius:8px; padding:16px;
+         font-size:1rem; margin:16px 0; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px;
+           padding:12px 20px; font-size:1rem; font-weight:700; cursor:pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Autorisation TikTok reçue</h1>
+  <div id="ok" hidden>
+    <p>Copie ce code et colle-le dans jarvis (Telegram ou terminal) pour
+    terminer la connexion du compte TikTok du club :</p>
+    <code id="code"></code>
+    <button id="copy">Copier le code</button>
+  </div>
+  <div id="err" hidden>
+    <p>Aucun code d'autorisation dans l'adresse. Relance la connexion
+    depuis jarvis.</p>
+  </div>
+<script>
+  var params = new URLSearchParams(location.search);
+  var code = params.get("code");
+  if (code) {
+    document.getElementById("ok").hidden = false;
+    document.getElementById("code").textContent = code;
+    document.getElementById("copy").addEventListener("click", function () {
+      try { navigator.clipboard.writeText(code); this.textContent = "Copié !"; }
+      catch (e) { /* sélection manuelle possible */ }
+    });
+  } else {
+    document.getElementById("err").hidden = false;
+  }
+</script>
+</main>
+</body>
+</html>
